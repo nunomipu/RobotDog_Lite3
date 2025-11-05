@@ -58,8 +58,8 @@ struct ControllerConfig {
     std::string log_file = "lite3_log.csv";  ///< Log file path
     VecXf default_pose = (Eigen::VectorXf(12) << 0, -0.8, 1.6, 0, -0.8, 1.6,
                                                    0, -0.8, 1.6, 0, -0.8, 1.6).finished();
-    VecXf default_kp = VecXf::Constant(12, 30.0f);  ///< Default proportional gains
-    VecXf default_kd = VecXf::Constant(12, 1.0f);   ///< Default derivative gains
+    VecXf default_kp = VecXf::Constant(12, 45.0f);  ///< Default proportional gains
+    VecXf default_kd = VecXf::Constant(12, 2.0f);   ///< Default derivative gains
 };
 
 /**
@@ -122,6 +122,13 @@ public:
      * @param blocking  If true, waits until standing is complete
      */
     void standUp(float duration = 2.0f, bool blocking = true);
+    
+    /**
+     * @brief Stand up using a two-stage sequence (PreStand -> Stand), mimicking MotionSDK.
+     * @param pre_stand_duration Time for the pre-stand tucking motion (secs)
+     * @param stand_duration TIme for the final standing motion (secs)
+     */
+    void standUpTwoStage(float pre_stand_duration = 1.0f, float stand_duration = 1.5f);
 
     /**
      * @brief Set target velocity command (normalized)

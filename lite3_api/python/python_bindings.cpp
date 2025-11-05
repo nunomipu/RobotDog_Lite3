@@ -5,7 +5,10 @@
  * @version 1.0
  * @date 2025-10-23
  */
-
+#include <Eigen/Core>
+#include <Eigen/Dense>     // (Bao gồm nếu bạn dùng MatrixXd, VectorXd)
+#include <Eigen/Sparse>
+#include <Eigen/SparseCore>
 #include <pybind11/pybind11.h>
 #include <pybind11/eigen.h>
 #include <pybind11/stl.h>
@@ -158,6 +161,20 @@ PYBIND11_MODULE(pylite3, m) {
                     duration (float): Time to reach standing position [seconds]
                     blocking (bool): If True, waits until standing is complete
              )pbdoc")
+        .def("stand_up_two_stage", &Lite3Controller::standUpTwoStage,
+             py::arg("pre_stand_duration") = 1.0f,
+             py::arg("stand_duration") = 2.0f,
+             R"pbdoc(
+                Perform a two-stage stand-up sequence.
+        
+                Args:
+                    pre_stand_duration (float): Duration of the pre-stand phase [seconds]
+                    stand_duration (float): Duration of the full stand phase [seconds]
+        
+                Example:
+                    >>> controller.stand_up_two_stage(1.5, 3.0)
+             )pbdoc")
+
         .def("set_velocity", &Lite3Controller::setVelocity,
              py::arg("vx"), py::arg("vy"), py::arg("vyaw"),
              R"pbdoc(

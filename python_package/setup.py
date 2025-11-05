@@ -37,7 +37,6 @@ setup(
     install_requires=[
         "numpy>=1.19.0,<2.0.0",
         "matplotlib>=3.3.0",
-        "pybullet>=3.0.0",
     ],
     extras_require={
         "gym": ["gymnasium>=0.28.0"],
